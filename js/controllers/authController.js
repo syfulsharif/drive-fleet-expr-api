@@ -82,15 +82,16 @@ const loginUser = async (req, res) => {
 };
 
 const logoutUser = (req, res) => {
-  // Detect if running on Vercel (production or preview)
+  // Detect production environment for consistent cookie clearing
   const isVercel = !!process.env.VERCEL || process.env.VERCEL_ENV === 'production';
   const isProduction = process.env.NODE_ENV === 'production' || isVercel;
 
+  // Clear JWT cookie by setting expiration to Unix epoch
   res.cookie('jwt', '', {
     httpOnly: true,
     secure: isProduction,
     sameSite: isProduction ? 'none' : 'lax',
-    expires: new Date(0),
+    expires: new Date(0), // Unix epoch (1970-01-01)
     path: '/',
   });
   res.status(200).json({ message: 'Logged out successfully' });
