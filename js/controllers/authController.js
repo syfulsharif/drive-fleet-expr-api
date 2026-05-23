@@ -6,11 +6,16 @@ const generateToken = (id, res) => {
     expiresIn: '30d',
   });
 
+  // Detect if running on Vercel (production or preview)
+  const isVercel = !!process.env.VERCEL || process.env.VERCEL_ENV === 'production';
+  const isProduction = process.env.NODE_ENV === 'production' || isVercel;
+
   res.cookie('jwt', token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-    maxAge: 30 * 24 * 60 * 60 * 1000, 
+    secure: isProduction, // HTTPS required for production
+    sameSite: isProduction ? 'none' : 'lax', // 'none' requires secure=true
+    maxAge: 30 * 24 * 60 * 60 * 1000,
+    path: '/', // Ensure cookie is sent to all paths
   });
 };
 
@@ -77,11 +82,16 @@ const loginUser = async (req, res) => {
 };
 
 const logoutUser = (req, res) => {
+  // Detect if running on Vercel (production or preview)
+  const isVercel = !!process.env.VERCEL || process.env.VERCEL_ENV === 'production';
+  const isProduction = process.env.NODE_ENV === 'production' || isVercel;
+
   res.cookie('jwt', '', {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+    secure: isProduction,
+    sameSite: isProduction ? 'none' : 'lax',
     expires: new Date(0),
+    path: '/',
   });
   res.status(200).json({ message: 'Logged out successfully' });
 };
