@@ -17,25 +17,25 @@ const PORT = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 const isVercel = !!process.env.VERCEL || process.env.VERCEL_ENV === 'production';
 const isProduction = process.env.NODE_ENV === 'production' || isVercel;
 
-// CORS configuration for both local and production
+// CORS configuration for both local and production frontends
 const getAllowedOrigins = () => {
   const origins = [];
   
-  // Add CORS_ORIGIN from env (can be comma-separated)
+  // Add CORS_ORIGIN from env (supports comma-separated list)
   if (process.env.CORS_ORIGIN) {
     origins.push(...process.env.CORS_ORIGIN.split(',').map(s => s.trim()));
   }
   
   if (isVercel) {
-    // Add Vercel preview URLs pattern
+    // Support all Vercel preview URLs
     origins.push(/\.vercel\.app$/);
-    // Add current Vercel URL if available
+    // Include current Vercel deployment URL
     if (process.env.VERCEL_URL) {
       origins.push(`https://${process.env.VERCEL_URL}`);
     }
   }
   
-  // Fallback for local development
+  // Default origins for local development
   if (origins.length === 0) {
     origins.push("http://localhost:5173", "http://localhost:5174", "http://localhost:3000");
   }
