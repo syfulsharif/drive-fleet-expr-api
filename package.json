@@ -1,0 +1,23 @@
+{
+  "name": "drivefleet-backend",
+  "version": "1.0.0",
+  "description": "DriveFleet Backend API - Vercel Ready",
+  "main": "js/server.js",
+  "scripts": {
+    "dev": "node js/server.js",
+    "start": "node js/server.js"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.6.2"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
