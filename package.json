@@ -1,11 +1,12 @@
 {
   "name": "drivefleet-backend",
   "version": "1.0.0",
-  "description": "DriveFleet Backend API - Vercel Ready",
+  "description": "DriveFleet Backend API - Production Ready",
   "main": "js/server.js",
   "scripts": {
     "dev": "node js/server.js",
-    "start": "node js/server.js"
+    "start": "node js/server.js",
+    "test": "echo \"No tests configured yet\""
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
@@ -19,5 +20,6 @@
   "devDependencies": {},
   "engines": {
     "node": ">=18.0.0"
-  }
+  },
+  "keywords": ["car-rental", "api", "express", "mongodb", "vercel"]
 }
