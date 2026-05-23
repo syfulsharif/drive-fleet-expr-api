@@ -3,19 +3,19 @@ const jwt = require('jsonwebtoken');
 
 const generateToken = (id, res) => {
   const token = jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: '30d',
+    expiresIn: '30d', // Token expires in 30 days
   });
 
-  // Detect if running on Vercel (production or preview)
+  // Detect production environment (Vercel or NODE_ENV=production)
   const isVercel = !!process.env.VERCEL || process.env.VERCEL_ENV === 'production';
   const isProduction = process.env.NODE_ENV === 'production' || isVercel;
 
   res.cookie('jwt', token, {
     httpOnly: true,
-    secure: isProduction, // HTTPS required for production
+    secure: isProduction, // HTTPS required in production
     sameSite: isProduction ? 'none' : 'lax', // 'none' requires secure=true
-    maxAge: 30 * 24 * 60 * 60 * 1000,
-    path: '/', // Ensure cookie is sent to all paths
+    maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days in milliseconds
+    path: '/', // Cookie available on all paths
   });
 };
 
